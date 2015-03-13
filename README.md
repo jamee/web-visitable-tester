@@ -1,2 +1,2 @@
 # web-visitable-tester
-Java tool for test if a web is visitable
+ Java tool for test if links of a web is visitable
