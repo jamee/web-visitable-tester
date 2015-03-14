@@ -131,7 +131,7 @@ public class WebVisitableTester {
     private void testResolvedLinks(final LinkStatsEntry linkStatsEntry, final int depth) {
         try {
             this.linksTranveller.accept(linkStatsEntry.getLink(), new LinkVisitor() {
-                public void visite(URL url, String title) {
+                public void visit(URL url, String title) {
                     try {
                         URL rootLinkURL = new URL(rootlinkStatsEntry.getLink());
                         if (!testExternalLink && !url.getHost().equals(rootLinkURL.getHost())) {

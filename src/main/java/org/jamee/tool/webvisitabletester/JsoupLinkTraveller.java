@@ -17,8 +17,8 @@ public class JsoupLinkTraveller implements LinksTraveller {
             for (Element le : linkElements) {
                 try {
                     URL url = new URL(le.attr("abs:href"));
-                    visitor.visite(url, le.text());
-                } catch (Exception e) {
+                    visitor.visit(url, le.text());
+                } catch (java.net.MalformedURLException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
