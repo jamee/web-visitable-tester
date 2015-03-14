@@ -49,28 +49,19 @@ public class WebVisitableTester {
     }
 
     private void testLinkVisitable(final LinkStatsEntry linkStatsEntry) {
-        int requestCount = linkStatsEntry.getMaxRequestCount();
-        if (linkStatsEntry.getMaxRequestCount() != linkStatsEntry.getMinRequestCount()) {
-            Random r = new Random();
-            requestCount = r.nextInt(linkStatsEntry.getMaxRequestCount());
-            while (requestCount < linkStatsEntry.getMinRequestCount()) {
-                requestCount = r.nextInt(linkStatsEntry.getMaxRequestCount());
-            }
-        }
         long maxLoadTime = 0;
         long minLoadTime = 0;
         long totalLoadTime = 0;
+        int requestCount = getRequestCount(linkStatsEntry);
         for (int i = 0; i < requestCount; ++i) {
             try {
                 long startTime = System.currentTimeMillis();
-                Connection conn = Jsoup.connect(linkStatsEntry.getLink());
-                conn.execute();
-                Response response = conn.response();
+                int statusCode = loadURL(linkStatsEntry.getLink());
                 long loadTime = System.currentTimeMillis() - startTime;
                 minLoadTime = (minLoadTime == 0) ? loadTime : Math.min(minLoadTime, loadTime);
                 maxLoadTime = Math.max(loadTime, maxLoadTime);
                 totalLoadTime += loadTime;
-                linkStatsEntry.setResponseCode(response.statusCode());
+                linkStatsEntry.setResponseCode(statusCode);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -80,6 +71,25 @@ public class WebVisitableTester {
         linkStatsEntry.setMaxLoadTime(maxLoadTime);
         linkStatsEntry.setMinLoadTime(minLoadTime);
         requestedLinks.add(linkStatsEntry.getLink());
+    }
+
+    private int loadURL(final String url) throws IOException {
+        Connection conn = Jsoup.connect(url);
+        conn.execute();
+        Response response = conn.response();
+        return response.statusCode();
+    }
+
+    private int getRequestCount(final LinkStatsEntry linkStatsEntry) {
+        int requestCount = linkStatsEntry.getMaxRequestCount();
+        if (linkStatsEntry.getMaxRequestCount() != linkStatsEntry.getMinRequestCount()) {
+            Random r = new Random();
+            requestCount = r.nextInt(linkStatsEntry.getMaxRequestCount());
+            while (requestCount < linkStatsEntry.getMinRequestCount()) {
+                requestCount = r.nextInt(linkStatsEntry.getMaxRequestCount());
+            }
+        }
+        return requestCount;
     }
 
     private void testResolvedLinks(final LinkStatsEntry linkStatsEntry, final int depth) {

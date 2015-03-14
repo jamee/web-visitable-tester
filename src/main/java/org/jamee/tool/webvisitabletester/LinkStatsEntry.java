@@ -5,17 +5,17 @@ import java.util.Collections;
 import java.util.List;
 
 public class LinkStatsEntry {
-    String link;
-    String title;
-    long maxLoadTime;
-    long minLoadTime;
-    long avarageLoadTime;
-    int responseCode;
-    int errorCount;
-    int requestedCount;
-    int maxRequestCount;
-    int minRequestCount;
-    List<LinkStatsEntry> links = new ArrayList<LinkStatsEntry>();
+    private String link;
+    private String title;
+    private long maxLoadTime;
+    private long minLoadTime;
+    private long avarageLoadTime;
+    private int responseCode;
+    private int errorCount;
+    private int requestedCount;
+    private int maxRequestCount;
+    private int minRequestCount;
+    private List<LinkStatsEntry> links = new ArrayList<LinkStatsEntry>();
 
     public LinkStatsEntry(String link, String title, int maxRequestCount, int minRequestCount) {
         super();
