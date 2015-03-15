@@ -161,8 +161,8 @@ public class WebVisitableTester {
     public static void main(String[] args) throws IOException {
         System.out
                 .println("Link\t\t\tTitle\tResponse Code\tRequested Count\tMax Response Time\tMin Response Time\tAvarage Response Time");
-        WebVisitableTester wvtester = new WebVisitableTester("https://www.baidu.com/", "baidu", 1, 1,
-                1, false);
+        WebVisitableTester wvtester = new WebVisitableTester("https://www.baidu.com/", "baidu", 3, 1,
+                2, false);
         wvtester.setLinkStatsStreamRender(new LinkStatsStreamRender() {
             public void render(LinkStatsEntry linkStatsEntry, int depth) {
                 for (int i = 0; i < depth; ++i)
